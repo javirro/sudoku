@@ -1,9 +1,20 @@
 import '../styles/square.css'
-const Square = () => {
-  const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+import { GameResult, SquareProps } from '../types/gameTypes'
+
+const Square = ({ game, setGame, squareId }: SquareProps) => {
+
+  const handleNumber = (ev: any, arrayIndex: number) => {
+    const newNumber: number = ev.target.value // new added number
+    let squareData: number[] = game[squareId] // each array of 9 numbers
+    squareData[arrayIndex] = newNumber
+    const newGame: GameResult = {...game, [squareId]: squareData }
+    setGame(newGame)
+  }
+ 
+  const squareNumber: number[] = game[squareId]
   return (
     <div className="square">
-      {numbers.map((n: number) =>  <input type='number' className='number-input' value={n}/>)}
+      {squareNumber.map((n: number, i: number) =>  <input type='number' className='number-input' value={n} key={i + 1} onChange={(ev) => handleNumber(ev, i )}/>)}
     </div>
   )
 }
