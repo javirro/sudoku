@@ -6,35 +6,6 @@ import { GameResult } from "../types/gameTypes"
 
 // Horizontal check: 1,2,3 || 4, 5, 6,
 
-const createHorizontalCheckArray = (position: number, squareId: number, game: GameResult) => {
-  const firstRow = [1, 2, 3]
-  const secondRow = [4, 5, 6]
-  const thirdRow = [7, 8, 9]
-  let line: number[] = []
-  if (firstRow.includes(position)) {
-    let rowToUse: number[] = []
-    if (firstRow.includes(squareId)) rowToUse = rowToUse.concat(firstRow)
-    else if (secondRow.includes(squareId)) rowToUse = rowToUse.concat(secondRow)
-    else if (thirdRow.includes(squareId)) rowToUse = rowToUse.concat(thirdRow)
-    for (let i = 0; i < rowToUse.length; i++) {
-      const gameRow: number[] = game[rowToUse[i].toString()]
-      const squareNumbers: number[] = gameRow.slice(0, 3) // the first three items of each row
-      line = line.concat(squareNumbers)
-    }
-  } else if (secondRow.includes(position)) {
-    let rowToUse: number[] = []
-    if (firstRow.includes(squareId)) rowToUse = rowToUse.concat(firstRow)
-    else if (secondRow.includes(squareId)) rowToUse = rowToUse.concat(secondRow)
-    else if (thirdRow.includes(squareId)) rowToUse = rowToUse.concat(thirdRow)
-    for (let i = 0; i < rowToUse.length; i++) {
-      const gameRow: number[] = game[rowToUse[i].toString()]
-      const squareNumbers: number[] = gameRow.slice(3, 7) // the first three items of each row
-      line = line.concat(squareNumbers)
-    }
-  } else if (thirdRow.includes(position)) {
-  }
-  return line
-}
 
 export const checkIfNumberIsInHorizontalLine = (n: number, position: number, squareId: number, game: GameResult): boolean => {
   if (position === 1 || position === 2 || position === 3) {
