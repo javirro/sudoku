@@ -3,32 +3,32 @@
 // Difficult: 4 numbers
 
 import { GameResult } from "../types/gameTypes"
+import { createHorizontalCheckArray } from "./createHorizontalCheckArray"
+import { createVerticalCheckArray } from "./createVerticalCheckArray"
 
 // Horizontal check: 1,2,3 || 4, 5, 6,
 
-
 export const checkIfNumberIsInHorizontalLine = (n: number, position: number, squareId: number, game: GameResult): boolean => {
-  if (position === 1 || position === 2 || position === 3) {
-    if (squareId === 1 || squareId === 2 || squareId === 3) {
-      const square1 = game["1"].slice(0, 3)
-      const square2 = game["2"].slice(0, 3)
-      const square3 = game["3"].slice(0, 3)
-      const line = square1.concat(square2).concat(square3)
-      if (!line.includes(n)) return false
-      else return true
-    }
-  } else if (position === 4 || position === 5 || position === 6) {
-  } else if (position === 7 || position === 8 || position === 9) {
-  }
-  return false
+  const line: number[] = createHorizontalCheckArray(position, squareId, game)
+  if (!line.includes(n)) return false
+  else return true
 }
+
+export const checkIfNumberisInVerticalLine = (n: number, position: number, squareId: number, game: GameResult): boolean => {
+  const line: number[] = createVerticalCheckArray(position, squareId, game)
+  if (!line.includes(n)) return false
+  else return true
+}
+
 
 export const generateSquareNumbers = (squareId: number, initialGame: GameResult): number[] => {
   let result: number[] = []
   for (let i = 1; i <= 9; i++) {
     const n: number = Math.floor(Math.random() * 10)
-    if (!result.includes(n)) result.push(n)
-    else result.push(0)
+    if (!result.includes(n)) {
+      if (!checkIfNumberIsInHorizontalLine(n, i, squareId, initialGame) && !checkIfNumberisInVerticalLine(n, i, squareId, initialGame)) result.push(n)
+      else result.push(0)
+    } else result.push(0)
   }
   return result
 }
